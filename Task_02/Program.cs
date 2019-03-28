@@ -16,7 +16,7 @@ namespace TaskTwo
 
     interface IOneExecutor
     {
-        void WriteExecutor();
+       void WriteExecutor();
     }
 
     interface ITwoExecutor
@@ -30,6 +30,16 @@ namespace TaskTwo
         {
             Console.WriteLine("I base Executor!");
         }
+
+        void IOneExecutor.WriteExecutor()
+        {
+            Console.WriteLine("I one Executor!");
+        }
+
+        void ITwoExecutor.WriteExecutor()
+        {
+            Console.WriteLine("I two Executor!");
+        }
     }
 
     
@@ -40,7 +50,8 @@ namespace TaskTwo
         {
             var @base = new Base();
             @base.WriteExecutor();
-            
+            (@base as IOneExecutor).WriteExecutor();
+            (@base as ITwoExecutor).WriteExecutor();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace TaskOne
 
         public static string RandomString(int length)
         {
-            if(length < 0)
+            if(length < 1)
             {
                 Console.WriteLine("Значение длинны генерируемой строки должно быть больше нуля!");
                 return string.Empty;
@@ -30,7 +30,7 @@ namespace TaskOne
 
         static void Main(string[] args)
         {
-            string data = RandomString(1);
+            string data = RandomString(5);
 
             if(string.IsNullOrEmpty(data))
             {
@@ -42,6 +42,8 @@ namespace TaskOne
 
             foreach (byte digit in data.GetDigits())
             {
+                //Возможно переполнение и сдвиг значения переменной byte. В данном коде используется константа 5, что в сумме не будет более 255.
+                //TODO: использовать int или long, если будет использование больших входных строк.
                 summary += digit;
             }
 
@@ -49,18 +51,20 @@ namespace TaskOne
         }
     }
 
+    /// <summary>
+    /// Класс расширения методов String
+    /// </summary>
     public static class StringExtension
     {
         public static byte[] GetDigits(this string inputString)
         {
-            
             string digitString = new string(inputString.Where(char.IsDigit).ToArray());
             byte[] result = new byte[digitString.Length];
             int i = 0;
 
-            foreach (char parseDigit in digitString)
+            foreach (char digit in digitString)
             {
-                result[i] = (byte)Char.GetNumericValue(parseDigit);
+                result[i] = (byte)char.GetNumericValue(digit);
                 i++;
             }
 
