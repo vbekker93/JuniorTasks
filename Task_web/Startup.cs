@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using Task_web.Models;
 
 namespace Task_web
@@ -60,7 +55,6 @@ namespace Task_web
                     c.RouteTemplate = "api-docs/{documentName}/swagger.json";
                 });
 
-
             app.UseSwaggerUI(c =>
                {
                    c.RoutePrefix = "swagger";
@@ -68,7 +62,6 @@ namespace Task_web
                    c.DocExpansion(DocExpansion.List);
                });
 
-           
             app.UseMvc();
         }
     }
