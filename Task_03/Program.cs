@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TaskThree
 {
@@ -22,25 +23,40 @@ namespace TaskThree
     {
         static void Main(string[] args)
         {
+            Dictionary<ActionType, Action<ActionType>> methodsDic;
+            InitDictionary(out methodsDic);
+            
             var type = ActionType.Read;
 
-            switch (type)
-            {
-                case ActionType.Create:
-                    CreateMethod(type);
-                    break;
-                case ActionType.Read:
-                    ReadMethod(type);
-                    break;
-                case ActionType.Update:
-                    UpdateMethod(type);
-                    break;
-                case ActionType.Delete:
-                    DeleteMethod(type);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            if (methodsDic.ContainsKey(type))
+                methodsDic[type](type);
+            else
+                Console.WriteLine("Метод " + type.ToString() + " не добавлен в коллекцию!");
+        }
+
+        /// <summary>
+        /// Инициализация коллекции методов
+        /// </summary>
+        /// <param name="inputDic">Словарь методов</param>
+        private static void InitDictionary(out Dictionary<ActionType, Action<ActionType>> inputDic)
+        {
+            inputDic = new Dictionary<ActionType, Action<ActionType>>();
+
+            inputDic.Add(ActionType.Create,
+               new Action<ActionType>(CreateMethod)
+            );
+
+            inputDic.Add(ActionType.Read,
+               new Action<ActionType>(ReadMethod)
+            );
+
+            inputDic.Add(ActionType.Update,
+               new Action<ActionType>(UpdateMethod)
+            );
+
+            inputDic.Add(ActionType.Delete,
+               new Action<ActionType>(DeleteMethod)
+            );
         }
 
         private static void CreateMethod(ActionType type)
