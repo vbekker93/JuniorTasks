@@ -11,16 +11,48 @@ namespace Task_04
 
     class Program
     {
-        
+        /// <summary>
+        /// Переменная даты, для которой производится операция
+        /// </summary>
+        static DateTime CurrentDateTime;
+
+        /// <summary>
+        /// Константа частоты срабатывания будильника (в милисекундах)
+        /// </summary>
+        const int alarmMilisecondsRate = 1000;
+
         static void Main(string[] args)
         {
-            var wakeUp = DateTime.Now.AddSeconds(10);
+            CurrentDateTime = DateTime.Now;
+
+            var wakeUp = CurrentDateTime.AddSeconds(10);
+            
             foreach (DateTime value in AlarmClockTimer(wakeUp))
             {
-
                 Console.WriteLine((wakeUp - value).ToString(@"dd\.hh\:mm\:ss"));
-                Thread.Sleep(1000);
+                Thread.Sleep(alarmMilisecondsRate);
             }
+        }
+
+        /// <summary>
+        /// Метод получения списка времени
+        /// </summary>
+        /// <param name="wakeUp">Дата срабатывания будильника</param>
+        /// <returns>Коллекция времени будильника</returns>
+        private static List<DateTime> AlarmClockTimer(DateTime wakeUp)
+        {
+            TimeSpan _ts = wakeUp - CurrentDateTime;
+            int dateCount = (int)_ts.TotalMilliseconds / alarmMilisecondsRate;
+
+            if (dateCount < 1)
+                return new List<DateTime>();
+
+            List<DateTime> resultDates = new List<DateTime>(dateCount);
+
+            for(int i = 0; i<dateCount; i++)
+                resultDates.Add(CurrentDateTime.AddMilliseconds(i*alarmMilisecondsRate));
+
+            return resultDates;
         }
     }
 }
