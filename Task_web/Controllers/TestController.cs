@@ -24,7 +24,7 @@ namespace Task_web.Controllers
         */
 
         /// <summary>
-        /// Создание объекта
+        /// Создать объект
         /// </summary>
         /// <param name="_name">Имя объекта</param>
         /// <returns>Ответ с созданным объектом</returns>
@@ -81,7 +81,9 @@ namespace Task_web.Controllers
                 _testModels[index].Name = _newName;
             }
             else
+            {
                 return BadRequest();
+            }
 
             return new NoContentResult();
         }
@@ -106,7 +108,9 @@ namespace Task_web.Controllers
                 _testModels.RemoveAt(index);
             }
             else
+            {
                 return BadRequest();
+            }
 
             return new NoContentResult();
         }

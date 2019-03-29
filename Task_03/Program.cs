@@ -3,9 +3,7 @@ using System.Collections.Generic;
 
 namespace TaskThree
 {
-
     /// Задача - перепишите данный код так, чтобы он работал через коллекции C#, вместо конструкции switch
-
 
     public enum ActionType
     {
@@ -16,22 +14,28 @@ namespace TaskThree
         Update,
 
         Delete
-        
     }
 
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Dictionary<ActionType, Action<ActionType>> methodsDic;
-            InitDictionary(out methodsDic);
-            
-            var type = ActionType.Read;
+            try
+            {
+                Dictionary<ActionType, Action<ActionType>> methodsDic;
+                InitDictionary(out methodsDic);
 
-            if (methodsDic.ContainsKey(type))
-                methodsDic[type](type);
-            else
-                Console.WriteLine("Метод " + type.ToString() + " не добавлен в коллекцию!");
+                var type = ActionType.Read;
+
+                if (methodsDic.ContainsKey(type))
+                    methodsDic[type](type);
+                else
+                    Console.WriteLine("Метод " + type.ToString() + " не добавлен в коллекцию!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
         }
 
         /// <summary>

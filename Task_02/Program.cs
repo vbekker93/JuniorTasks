@@ -2,8 +2,6 @@
 
 namespace TaskTwo
 {
-
-
     /// Есть базовый класс с реалиазцией двух интерфейсов, имеющих одинаковый метод
     /// строка var @base = new Base(); - создаёт объект типа Base
     /// вызов @base.WriteExecutor()    - выводит на экран строку I base Executor!
@@ -14,17 +12,17 @@ namespace TaskTwo
     /// I one Executor!
     /// I two Executor!
 
-    interface IOneExecutor
-    {
-       void WriteExecutor();
-    }
-
-    interface ITwoExecutor
+    internal interface IOneExecutor
     {
         void WriteExecutor();
     }
 
-    class Base : IOneExecutor, ITwoExecutor
+    internal interface ITwoExecutor
+    {
+        void WriteExecutor();
+    }
+
+    internal class Base : IOneExecutor, ITwoExecutor
     {
         public void WriteExecutor()
         {
@@ -42,16 +40,21 @@ namespace TaskTwo
         }
     }
 
-    
-
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            var @base = new Base();
-            @base.WriteExecutor();
-            (@base as IOneExecutor).WriteExecutor();
-            (@base as ITwoExecutor).WriteExecutor();
+            try
+            {
+                var @base = new Base();
+                @base.WriteExecutor();
+                (@base as IOneExecutor).WriteExecutor();
+                (@base as ITwoExecutor).WriteExecutor();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
         }
     }
 }

@@ -4,33 +4,38 @@ using System.Threading;
 
 namespace Task_04
 {
-
     /// Задача - дорабатываем будильник
     /// необходимо написать метод, который позволит считать, сколько времени осталось до того, как зазвонит будильник
 
-
-    class Program
+    internal class Program
     {
         /// <summary>
         /// Переменная даты, для которой производится операция
         /// </summary>
-        static DateTime CurrentDateTime;
+        private static DateTime CurrentDateTime;
 
         /// <summary>
         /// Константа частоты срабатывания будильника (в милисекундах)
         /// </summary>
-        const int alarmMilisecondsRate = 1000;
+        private const int alarmMilisecondsRate = 1000;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            CurrentDateTime = DateTime.Now;
-
-            var wakeUp = CurrentDateTime.AddSeconds(10);
-            
-            foreach (DateTime value in AlarmClockTimer(wakeUp))
+            try
             {
-                Console.WriteLine((wakeUp - value).ToString(@"dd\.hh\:mm\:ss"));
-                Thread.Sleep(alarmMilisecondsRate);
+                CurrentDateTime = DateTime.Now;
+
+                var wakeUp = CurrentDateTime.AddSeconds(10);
+
+                foreach (DateTime value in AlarmClockTimer(wakeUp))
+                {
+                    Console.WriteLine((wakeUp - value).ToString(@"dd\.hh\:mm\:ss"));
+                    Thread.Sleep(alarmMilisecondsRate);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
             }
         }
 
@@ -49,8 +54,8 @@ namespace Task_04
 
             List<DateTime> resultDates = new List<DateTime>(dateCount);
 
-            for(int i = 0; i<dateCount; i++)
-                resultDates.Add(CurrentDateTime.AddMilliseconds(i*alarmMilisecondsRate));
+            for (int i = 0; i < dateCount; i++)
+                resultDates.Add(CurrentDateTime.AddMilliseconds(i * alarmMilisecondsRate));
 
             return resultDates;
         }
